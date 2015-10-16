@@ -1,4 +1,4 @@
-bmcgehee/SimpleApp5:
+bmcgehee/example-integration-newrelic:
 
   Env:
     - NR_INSTALL_SILENT: "TRUE"
