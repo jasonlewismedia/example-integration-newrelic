@@ -1,0 +1,32 @@
+bmcgehee/SimpleApp5:
+
+  Env:
+    - NR_INSTALL_SILENT: "TRUE"
+    - NR_APP_NAME: "PUT_YOUR_APP_NAME_HERE"
+    - NR_INSTALL_KEY: "PUT_YOUR_NEW_RELIC_LICENSE_KEY_HERE"
+    - PORT: "8000"
+
+  PreInstall:
+    - echo "PreInstall"
+    - echo "Updating apt-get index"
+    - sudo apt-get -y update
+    - echo "Installing php"
+    - sudo apt-get -y install php5-cli
+    - echo "Install the New Relic PHP agent"
+    - echo "Get the key"
+    - wget -O - https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
+    - echo "Add Repository"
+    - sudo sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list'
+    - echo "Install New Relic"
+    - 'sudo debconf-set-selections <<< "newrelic-php5 newrelic-php5/application-name string \"$NR_APP_NAME\""'
+    - 'sudo debconf-set-selections <<< "newrelic-php5 newrelic-php5/license-key string \"$NR_INSTALL_KEY\""'
+    - sudo apt-get -y update
+    - sudo apt-get -y install newrelic-php5
+    - sudo sh -c "export NR_INSTALL_SILENT=\"$NR_INSTALL_SILENT\"; export NR_INSTALL_KEY=\"$NR_INSTALL_KEY\"; export NR_APP_NAME=\"$NR_APP_NAME\"; newrelic-install install"
+    
+  PkgInclude:
+    - simpleapp.php
+    
+  Exec:
+    - 'php -S 0.0.0.0:$PORT simpleapp.php'
+    
