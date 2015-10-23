@@ -1,4 +1,4 @@
-bmcgehee/example-integration-newrelic:
+brimworks/example-integration-newrelic:
 
   Env:
     - NR_INSTALL_SILENT: "TRUE"
@@ -16,17 +16,23 @@ bmcgehee/example-integration-newrelic:
     - echo "Get the key"
     - wget -O - https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
     - echo "Add Repository"
-    - sudo sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list'
+    - echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee /etc/apt/sources.list.d/newrelic.list
     - echo "Install New Relic"
     - 'sudo debconf-set-selections <<< "newrelic-php5 newrelic-php5/application-name string \"$NR_APP_NAME\""'
     - 'sudo debconf-set-selections <<< "newrelic-php5 newrelic-php5/license-key string \"$NR_INSTALL_KEY\""'
     - sudo apt-get -y update
     - sudo apt-get -y install newrelic-php5
-    - sudo sh -c "export NR_INSTALL_SILENT=\"$NR_INSTALL_SILENT\"; export NR_INSTALL_KEY=\"$NR_INSTALL_KEY\"; export NR_APP_NAME=\"$NR_APP_NAME\"; newrelic-install install"
+
+  PostInstall:
+    - sudo ./bin/install-newrelic.sh
     
   PkgInclude:
     - simpleapp.php
+    - "templates/**"
     
+  InstallTemplates:
+    - ["templates/bin/install-newrelic.sh", "bin"]
+
   Exec:
     - 'php -S 0.0.0.0:$PORT simpleapp.php'
     
