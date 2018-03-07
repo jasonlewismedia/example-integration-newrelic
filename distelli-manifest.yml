@@ -2,8 +2,8 @@ brimworks/example-integration-newrelic:
 
   Env:
     - NR_INSTALL_SILENT: "TRUE"
-    - NR_APP_NAME: "PUT_YOUR_APP_NAME_HERE"
-    - NR_INSTALL_KEY: "PUT_YOUR_NEW_RELIC_LICENSE_KEY_HERE"
+    - NR_APP_NAME: "MULAN_APP"
+    - NR_INSTALL_KEY: "e6d9262e1d82bcf0cd5a5926b32f39d480cab60a"
     - PORT: "8000"
 
   PreInstall:
