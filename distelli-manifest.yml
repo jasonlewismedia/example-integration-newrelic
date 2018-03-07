@@ -1,4 +1,4 @@
-brimworks/example-integration-newrelic:
+gandrews/mulan_app:
 
   Env:
     - NR_INSTALL_SILENT: "TRUE"
