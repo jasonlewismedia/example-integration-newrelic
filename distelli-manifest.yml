@@ -1,4 +1,4 @@
-gandrews/mulan_app:
+jalewis/dark_side_app_newrelic:
 
   Env:
     - NR_INSTALL_SILENT: "TRUE"
